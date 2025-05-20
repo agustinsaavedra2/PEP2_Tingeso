@@ -1,27 +1,19 @@
-package com.example.client_service.entity;
+package com.example.booking_rate_service.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name="client")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class ClientEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String rut;
     private String email;
     private LocalDate birthDate;
     private int numberOfVisits;
-
 }

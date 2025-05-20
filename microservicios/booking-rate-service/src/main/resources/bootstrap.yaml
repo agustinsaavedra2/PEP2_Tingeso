@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: booking-rate-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookingsdb
+    username: root
+    password: laucesbkn2001
+  jpa:
+    hibernate:
+      ddl-auto: update
