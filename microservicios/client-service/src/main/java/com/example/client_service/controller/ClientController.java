@@ -5,12 +5,11 @@ import com.example.client_service.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("api/client")
 @AllArgsConstructor
@@ -31,7 +30,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientEntity> findClientById(@PathVariable Long id){
+    public ResponseEntity<ClientEntity> findClientById(@PathVariable("id") Long id){
         ClientEntity client = clientService.findClientById(id);
 
         if(client == null){

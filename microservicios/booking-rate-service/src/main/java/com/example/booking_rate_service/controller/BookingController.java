@@ -6,12 +6,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("api/booking")
 @AllArgsConstructor
@@ -35,7 +34,7 @@ public class BookingController {
     public ResponseEntity<BookingEntity> findBookingById(@PathVariable("id") Long id){
         BookingEntity booking = bookingService.findBookingById(id);
 
-        if(booking != null){
+        if(booking == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(booking);
