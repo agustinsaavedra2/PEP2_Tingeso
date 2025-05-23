@@ -10,6 +10,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class DiscountNumPeopleService {
 
     public DiscountNumPeopleEntity getDiscountNumPeopleById(Long id){
         return discountNumPeopleRepository.findById(id).orElse(null);
+    }
+
+    public void updateBooking(BookingEntity booking) {
+        String url = "http://booking-rate-service/api/booking/";
+        restTemplate.put(url, booking);
     }
 
     public DiscountNumPeopleEntity updateDiscountNumPeople(DiscountNumPeopleEntity discountNumPeopleEntity){
@@ -66,6 +72,8 @@ public class DiscountNumPeopleService {
         else{
             throw new IllegalArgumentException("Client's size are not in range");
         }
+
+        updateBooking(booking);
 
         List<Pair<String, Double>> clientsDiscountSizePeople = new ArrayList<>();
 

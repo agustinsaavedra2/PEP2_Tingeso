@@ -47,6 +47,17 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
+    @PutMapping("/")
+    public ResponseEntity<BookingEntity> updateBooking(@RequestBody BookingEntity booking) {
+        BookingEntity updatedBooking = bookingService.updateBooking(booking);
+
+        if(updatedBooking == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updatedBooking);
+    }
+
     @PutMapping("/setPriceDuration/{id}")
     public ResponseEntity<List<Pair<String, Double>>> setPriceDuration(@PathVariable("id") Long id){
         List<Pair<String, Double>> clientsBasePrice = bookingService.setPriceAndDurationInBooking(id);
