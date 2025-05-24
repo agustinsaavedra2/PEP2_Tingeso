@@ -20,26 +20,6 @@ public class DiscountFreqClientsController {
     @Autowired
     private DiscountFreqClientsService discountFreqClientsService;
 
-    @GetMapping("/booking/{id}")
-    public ResponseEntity<BookingEntity> findBookingById(@PathVariable("id") Long id){
-        BookingEntity booking = discountFreqClientsService.findBookingById(id);
-
-        if(booking == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(booking);
-    }
-
-    @GetMapping("/client/{id}")
-    public ResponseEntity<ClientEntity> findClientById(@PathVariable("id") Long id){
-        ClientEntity client = discountFreqClientsService.findClientById(id);
-
-        if(client == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(client);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<List<Pair<String, Double>>> setDiscountByFrequentCustomer(@PathVariable("id") Long id){
         List<Pair<String, Double>> discountFrequentCustomer = discountFreqClientsService.setDiscountByFrequentCustomer(id);

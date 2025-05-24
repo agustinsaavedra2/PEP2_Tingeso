@@ -1,7 +1,5 @@
 package com.example.discount_npeople_service.controller;
 
-import com.example.discount_npeople_service.model.BookingEntity;
-import com.example.discount_npeople_service.model.ClientEntity;
 import com.example.discount_npeople_service.service.DiscountNumPeopleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +17,6 @@ public class DiscountNumPeopleController {
 
     @Autowired
     DiscountNumPeopleService discountNumPeopleService;
-
-    @GetMapping("/booking/{id}")
-    public ResponseEntity<BookingEntity> findBookingById(@PathVariable("id") Long id){
-        BookingEntity booking = discountNumPeopleService.findBookingById(id);
-
-        if(booking == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(booking);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<List<Pair<String, Double>>> setDiscountByPeopleNumber(@PathVariable("id") Long id){
