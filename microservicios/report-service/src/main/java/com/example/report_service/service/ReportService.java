@@ -4,6 +4,9 @@ import com.example.report_service.model.BookingEntity;
 import com.example.report_service.model.VoucherEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,15 +21,27 @@ public class ReportService {
     private RestTemplate restTemplate;
 
     public List<VoucherEntity> findVouchersByBookingId(Long bookingId) {
-        return restTemplate.getForObject("https://booking-voucher-service/api/voucher/" + bookingId, List.class);
+        ResponseEntity<List<VoucherEntity>> response = restTemplate.exchange(
+                "https://booking-voucher-service/api/voucher/" + bookingId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<VoucherEntity>>() {}
+        );
+        return response.getBody();
     }
 
     public List<BookingEntity> findByBookingDateBetween(LocalDate startDate, LocalDate endDate) {
-        String url = String.format("http://booking-service/api/booking/between-dates?startDate=%s&endDate=%s",
+        String url = String.format("http://booking-rate-service/api/booking/between-dates?startDate=%s&endDate=%s",
                 startDate.toString(), endDate.toString());
 
-        BookingEntity[] response = restTemplate.getForObject(url, BookingEntity[].class);
-        return Arrays.asList(response);
+        ResponseEntity<List<BookingEntity>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<BookingEntity>>() {}
+        );
+
+        return response.getBody();
     }
 
     public List<Map<String, Object>> getRevenueReportByBookingType(LocalDate startDate, LocalDate endDate) {

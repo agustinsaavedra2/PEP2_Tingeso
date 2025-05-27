@@ -5,6 +5,9 @@ import com.example.weekly_rack_service.model.BookingEntity;
 import com.example.weekly_rack_service.repository.RackRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,7 +34,14 @@ public class RackService {
         String url = String.format("http://booking-rate-service/api/booking/between-dates?startDate=%s&endDate=%s",
                 startDate.toString(), endDate.toString());
 
-        return restTemplate.getForObject(url, List.class);
+        ResponseEntity<List<BookingEntity>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<BookingEntity>>() {}
+        );
+
+        return response.getBody();
     }
 
     public static LocalTime getStartTimeForDate(LocalDate date, List<LocalDate> holidays) {
