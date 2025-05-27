@@ -9,6 +9,8 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.print.Book;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,10 @@ public class BookingService {
 
     public BookingEntity findBookingById(Long id) {
         return bookingRepository.findById(id).orElse(null);
+    }
+
+    public List<BookingEntity> findByBookingDateBetween(LocalDate startDate, LocalDate endDate) {
+        return bookingRepository.findByBookingDateBetween(startDate, endDate);
     }
 
     public List<BookingEntity> getAllBookings() {

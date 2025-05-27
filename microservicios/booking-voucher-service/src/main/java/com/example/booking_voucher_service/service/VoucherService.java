@@ -13,6 +13,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.Vocabulary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -54,8 +55,8 @@ public class VoucherService {
         return voucherRepository.save(voucher);
     }
 
-    public VoucherEntity findById(Long id){
-        return voucherRepository.findById(id).orElse(null);
+    public List<VoucherEntity> findVouchersByBookingId(Long bookingId){
+        return voucherRepository.findVouchersByBookingId(bookingId);
     }
 
     public List<BookingEntity> findAllBookings(){

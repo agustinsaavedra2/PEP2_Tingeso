@@ -5,9 +5,11 @@ import com.example.booking_rate_service.service.BookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,6 +40,18 @@ public class BookingController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(booking);
+    }
+
+    @GetMapping("/between-dates")
+    public ResponseEntity<List<BookingEntity>> findByBookingDateBetween( @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                                         @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+            List<BookingEntity> bookings = bookingService.findByBookingDateBetween(startDate, endDate);
+
+            if(bookings == null){
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(bookings);
     }
 
     @GetMapping("/")

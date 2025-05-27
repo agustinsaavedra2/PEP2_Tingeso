@@ -26,6 +26,13 @@ public class VoucherController {
         return ResponseEntity.ok(bookings);
     }
 
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<List<VoucherEntity>> findVouchersByBookingId(@PathVariable("bookingId") Long bookingId){
+        List<VoucherEntity> vouchers = voucherService.findVouchersByBookingId(bookingId);
+
+        return ResponseEntity.ok(vouchers);
+    }
+
     @GetMapping("/generateClientVouchers/{bookingId}")
     public ResponseEntity<List<VoucherEntity>> generateClientVouchers(@PathVariable("bookingId") Long bookingId){
         List<VoucherEntity> clientVouchers = voucherService.generateVouchers(bookingId);

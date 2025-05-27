@@ -1,5 +1,6 @@
 package com.example.discount_specialdays_service.service;
 
+import com.example.discount_specialdays_service.entity.DiscountSpecialDaysEntity;
 import com.example.discount_specialdays_service.model.BookingEntity;
 import com.example.discount_specialdays_service.model.ClientEntity;
 import com.example.discount_specialdays_service.repository.DiscountSpecialDaysRepository;
@@ -36,6 +37,10 @@ public class DiscountSpecialDaysService {
     public void updateBooking(BookingEntity booking){
         String url = "http://booking-rate-service/api/booking/";
         restTemplate.put(url, booking);
+    }
+
+    public DiscountSpecialDaysEntity updateDiscountFreqClients(DiscountSpecialDaysEntity discountFreqClientsEntity){
+        return discountSpecialDaysRepository.save(discountFreqClientsEntity);
     }
 
     public List<Pair<String, Double>> setDiscountBySpecialDays(Long id) {
@@ -127,6 +132,23 @@ public class DiscountSpecialDaysService {
 
         booking.setDiscountBySpecialDays(totalBirthdayDiscount);
         updateBooking(booking);
+
+        DiscountSpecialDaysEntity discountEntity = new DiscountSpecialDaysEntity();
+
+        discountEntity.setId(booking.getId());
+        discountEntity.setNameBooking("Booking " + booking.getId());
+        discountEntity.setLapsNumber(booking.getLapsNumber());
+        discountEntity.setMaximumTime(booking.getMaximumTime());
+        discountEntity.setBookingDate(booking.getBookingDate());
+        discountEntity.setBookingTime(booking.getBookingTime());
+        discountEntity.setTotalDuration(booking.getTotalDuration());
+        discountEntity.setBasePrice(booking.getBasePrice());
+        discountEntity.setDiscountByPeopleNumber(totalBirthdayDiscount);
+        discountEntity.setDiscountByFrequentCustomer(booking.getDiscountByFrequentCustomer());
+        discountEntity.setDiscountBySpecialDays(booking.getDiscountBySpecialDays());
+        discountEntity.setClientIds(booking.getClientIds());
+
+        updateDiscountFreqClients(discountEntity);
 
         return clientDiscountBySpecialDays;
     }
