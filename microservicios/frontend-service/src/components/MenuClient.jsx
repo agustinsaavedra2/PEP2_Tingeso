@@ -26,6 +26,9 @@ const MenuClient = () => {
                 <button className="btn btn-danger" onClick={() => navigate("/setDiscountSpecialDays")}>
                     Discount for Special Days
                 </button>
+                <button className="btn btn-outline-danger" onClick={() => navigate("/generateClientVouchers")}>
+                    Generate Client Vouchers
+                </button>
                 <button className="btn btn-dark" onClick={() => navigate("/reportBookingType")}>
                     Report by Booking Type
                 </button>
@@ -34,9 +37,6 @@ const MenuClient = () => {
                 </button>
                 <button className="btn btn-outline-success" onClick={() => navigate("/getWeeklyRack")}>
                     Weekly Rack
-                </button>
-                <button className="btn btn-outline-danger" onClick={() => navigate("/generateClientVouchers")}>
-                    Generate Client Vouchers
                 </button>
             </div>
         </div>

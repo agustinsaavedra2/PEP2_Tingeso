@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BookingService from "../services/BookingService"
+import DiscountSpecialDaysService from "../services/DiscountSpecialDaysService"
 
 const DiscountSpecialDays = () => {
     const {id} = useParams();
@@ -14,7 +14,7 @@ const DiscountSpecialDays = () => {
     }
 
     const discSpecialDays = () => {
-        BookingService.setDiscountSpecialDays(idInput).then((response) => {
+        DiscountSpecialDaysService.setDiscountSpecialDays(idInput).then((response) => {
             setClientsDiscounts(response.data);
             setShowPrices(true);
        }).catch((error) => {

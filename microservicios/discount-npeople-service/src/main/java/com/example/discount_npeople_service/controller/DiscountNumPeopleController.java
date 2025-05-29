@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/discountNumPeople")
+@RequestMapping("/api/discountNumPeople")
 @AllArgsConstructor
 public class DiscountNumPeopleController {
 

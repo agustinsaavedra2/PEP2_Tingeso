@@ -1,6 +1,6 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; 
-import BookingService from "../services/BookingService";
+import DiscountNPeopleService from "../services/DiscountNPeopleService";
 
 const DiscountNumPeople = () => {
     const {id} = useParams();
@@ -14,7 +14,7 @@ const DiscountNumPeople = () => {
     }
 
     const handleDiscountPeopleNumber = () => {
-        BookingService.setDiscountPeopleNumber(idInput).then((response) => {
+        DiscountNPeopleService.setDiscountPeopleNumber(idInput).then((response) => {
             setClientsDiscounts(response.data);
             setShowPrices(true);
         }).catch((error) => {

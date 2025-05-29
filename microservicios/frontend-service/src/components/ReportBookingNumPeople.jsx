@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import BookingService from "../services/BookingService"; 
+import { useState } from "react";
+import ReportService from "../services/ReportService"; 
 import { useNavigate } from "react-router-dom";
 
 const ReportBookingNumPeople = () => {
@@ -17,7 +17,7 @@ const ReportBookingNumPeople = () => {
 
         setLoading(true);
         
-        BookingService.reportBookingNumberPeople(startDate, endDate).then((response) =>{
+        ReportService.reportBookingNumberPeople(startDate, endDate).then((response) =>{
             setRevenueReport(response.data);
             setLoading(false);
         }).catch((error) => {

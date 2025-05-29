@@ -1,6 +1,6 @@
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import BookingService from "../services/BookingService"
+import DiscountFreqClientsService from "../services/DiscountFreqClientsService";
 
 const DiscountFreqClient = () => {
     const {id} = useParams();
@@ -14,7 +14,7 @@ const DiscountFreqClient = () => {
     }
 
     const setDiscFreqClient = () => {
-        BookingService.setDiscountFreqClient(idInput).then((response) => {
+        DiscountFreqClientsService.setDiscountFreqClient(idInput).then((response) => {
             setClientsDiscounts(response.data);
             setShowPrices(true);
         }).catch((error) =>{

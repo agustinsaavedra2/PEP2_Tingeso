@@ -27,6 +27,10 @@ public class ClientService {
         return clientRepository.findById(id).orElse(null);
     }
 
+    public ClientEntity findClientByEmail(String email){
+        return clientRepository.findByEmail(email).orElse(null);
+    }
+
     public List<ClientEntity> getAllClients(){
         return clientRepository.findAll();
     }
