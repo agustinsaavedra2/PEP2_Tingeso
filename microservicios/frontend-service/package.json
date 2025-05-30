@@ -1,5 +1,5 @@
 {
-  "name": "pep1-tingeso-frontend",
+  "name": "frontend-service",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,10 @@
   "dependencies": {
     "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
+    "date-fns": "^4.1.0",
     "react": "^19.0.0",
+    "react-big-calendar": "^1.19.2",
+    "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0"
   },

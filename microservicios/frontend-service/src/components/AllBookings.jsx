@@ -1,13 +1,13 @@
 import {useState, useEffect} from "react";
-import BookingService from "../services/BookingService"
 import { useNavigate } from "react-router-dom";
+import VoucherService from "../services/VoucherService";
 
 const AllBookings = () => {
     const [listBookings, setListBookings] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() =>{
-        BookingService.getAllBookings().then((response) => {
+        VoucherService.getAllBookings().then((response) => {
             setListBookings(response.data);
         }).catch((error) => {
             console.log("Error fetching bookings", error);

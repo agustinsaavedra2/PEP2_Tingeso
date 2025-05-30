@@ -10,7 +10,7 @@ pipeline {
 
         stage('Install npm dependencies') {
             steps {
-                dir('PEP1_Tingeso_Frontend') {
+                dir('frontend-service') {
                     bat 'npm install'
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
 
         stage('Run npm build') {
             steps {
-                dir('PEP1_Tingeso_Frontend') {
+                dir('frontend-service') {
                     bat 'npm run build'
                 }
             }
@@ -26,19 +26,19 @@ pipeline {
 
         stage('Build docker image') {
             steps {
-                dir('PEP1_Tingeso_Frontend') {
-                    bat 'docker build -t agustinsaavedra056/pep1_tingeso_frontend:latest .'
+                dir('frontend-service') {
+                    bat 'docker build -t agustinsaavedra056/frontend-service:latest .'
                 }
             }
         }
 
         stage('Push image to Docker Hub') {
             steps {
-                dir('PEP1_Tingeso_Frontend') {
+                dir('frontend-service') {
                     withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
                         bat 'docker login -u agustinsaavedra056 -p %dhpsw%'
                     }
-                    bat 'docker push agustinsaavedra056/pep1_tingeso_frontend:latest'
+                    bat 'docker push agustinsaavedra056/frontend-service:latest'
                 }
             }
         }

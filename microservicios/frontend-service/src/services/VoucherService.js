@@ -20,10 +20,14 @@ const deleteVoucher = (id) => {
     return httpClient.delete(`/api/voucher/${id}`);
 }
 
+const getAllBookings = () => {
+    return httpClient.get("/api/voucher/bookings");
+}
+
 const generateClientVouchers = (bookingId) => {
     return httpClient.get(`/api/voucher/generateClientVouchers/${bookingId}`);
 }
 
 export default {createVoucher, getVoucherById, getAllVouchers, updateVoucher, deleteVoucher,
-    generateClientVouchers
+    getAllBookings, generateClientVouchers
 }

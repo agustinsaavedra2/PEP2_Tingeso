@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/client")
+@RequestMapping("/api/client")
 @AllArgsConstructor
 public class ClientController {
 

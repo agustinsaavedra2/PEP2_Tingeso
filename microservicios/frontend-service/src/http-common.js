@@ -1,13 +1,13 @@
 import axios from "axios"
 
-const pep1TingesoBackendServer = import.meta.env.VITE_PEP1_TINGESO_BACKEND_SERVER;
-const pep1TingesoBackendPort = import.meta.env.VITE_PEP1_TINGESO_BACKEND_PORT;
+const pep2TingesoBackendServer = import.meta.env.VITE_PEP2_TINGESO_BACKEND_SERVER;
+const pep2TingesoBackendPort = import.meta.env.VITE_PEP2_TINGESO_BACKEND_PORT;
 
-console.log(pep1TingesoBackendServer);
-console.log(pep1TingesoBackendPort);
+console.log(pep2TingesoBackendServer);
+console.log(pep2TingesoBackendPort);
 
 export default axios.create({
-    baseURL: `http://${pep1TingesoBackendServer}:${pep1TingesoBackendPort}`,
+    baseURL: `http://${pep2TingesoBackendServer}:${pep2TingesoBackendPort}`,
     headers: {
         'Content-Type': 'application/json'
     }

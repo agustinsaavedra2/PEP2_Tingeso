@@ -8,10 +8,6 @@ const getBookingById = (id) => {
     return httpClient.get(`/api/booking/${id}`);
 }
 
-const getAllBookings = () => {
-    return httpClient.get("/api/booking/");
-}
-
 const updateBooking = (data) => {
     return httpClient.put("/api/booking/", data);
 }
@@ -24,5 +20,5 @@ const setPriceAndDuration = (id) => {
     return httpClient.put(`/api/booking/setPriceDuration/${id}`)
 }
 
-export default { createBooking, getBookingById, getAllBookings, 
+export default { createBooking, getBookingById, 
     updateBooking, deleteBooking, setPriceAndDuration };
