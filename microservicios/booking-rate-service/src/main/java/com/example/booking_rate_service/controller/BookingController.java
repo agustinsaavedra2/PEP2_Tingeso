@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/booking")
+@RequestMapping("/api/booking")
 @AllArgsConstructor
 public class BookingController {
 
