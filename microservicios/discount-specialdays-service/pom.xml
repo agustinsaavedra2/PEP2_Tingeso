@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>discount-specialdays-service</finalName>
 	</build>
 
 </project>

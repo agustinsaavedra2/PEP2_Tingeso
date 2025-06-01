@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>weekly-rack-service</finalName>
 	</build>
 
 </project>

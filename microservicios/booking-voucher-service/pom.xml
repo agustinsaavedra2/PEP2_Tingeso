@@ -120,6 +120,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>booking-voucher-service</finalName>
 	</build>
 
 </project>

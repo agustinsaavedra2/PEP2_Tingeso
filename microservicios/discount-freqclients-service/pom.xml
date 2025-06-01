@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>discount-freqclients-service</finalName>
 	</build>
 
 </project>

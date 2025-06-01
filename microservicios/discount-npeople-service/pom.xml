@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>discount-npeople-service</finalName>
 	</build>
 
 </project>

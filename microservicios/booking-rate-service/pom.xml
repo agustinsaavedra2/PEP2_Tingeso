@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>booking-rate-service</finalName>
 	</build>
 
 </project>
