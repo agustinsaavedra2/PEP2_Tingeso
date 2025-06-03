@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: discount-freqclients-service-deployment
+  labels:
+    app: discount-freqclients-service-deployment
+spec: 
+  selector:
+    matchLabels: 
+      app: discount-freqclients-service-deployment
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        app: discount-freqclients-service-deployment
+    spec:
+      containers:
+        - name: discount-freqclients-service
+          image: agustinsaavedra056/discount-freqclients-service
+          ports: 
+            - containerPort: 8093

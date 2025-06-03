@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: booking-rate-service-deployment
+  labels:
+    app: booking-rate-service-deployment
+spec: 
+  selector:
+    matchLabels: 
+      app: booking-rate-service-deployment
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        app: booking-rate-service-deployment
+    spec:
+      containers:
+        - name: booking-rate-service
+          image: agustinsaavedra056/booking-rate-service
+          ports: 
+            - containerPort: 8091

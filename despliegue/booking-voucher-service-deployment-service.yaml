@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: booking-voucher-service-deployment
+  labels:
+    app: booking-voucher-service-deployment
+spec: 
+  selector:
+    matchLabels: 
+      app: booking-voucher-service-deployment
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        app: booking-voucher-service-deployment
+    spec:
+      containers:
+        - name: booking-voucher-service
+          image: agustinsaavedra056/booking-voucher-service
+          ports: 
+            - containerPort: 8095
