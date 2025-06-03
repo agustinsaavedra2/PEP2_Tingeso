@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-service-deployment
+  labels:
+    app: client-service-deployment
+spec: 
+  selector:
+    matchLabels: 
+      app: client-service-deployment
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        app: client-service-deployment
+    spec:
+      containers:
+        - name: client-service
+          image: agustinsaavedra056/client-service
+          ports: 
+            - containerPort: 8090
