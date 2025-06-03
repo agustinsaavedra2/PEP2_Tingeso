@@ -9,7 +9,6 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.awt.print.Book;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,17 @@ public class BookingService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public BookingEntity createBooking(BookingEntity bookingEntity) {
-        return bookingRepository.save(bookingEntity);
+    public BookingEntity createBooking(BookingEntity booking) {
+        for(Long clientId : booking.getClientIds()){
+            ClientEntity client = getClientById(clientId);
+
+            if(client != null){
+                client.setNumberOfVisits(client.getNumberOfVisits() + 1);
+                updateClient(client);
+            }
+        }
+
+        return bookingRepository.save(booking);
     }
 
     public BookingEntity findBookingById(Long id) {
@@ -45,6 +53,11 @@ public class BookingService {
 
     public BookingEntity updateBooking(BookingEntity booking){
         return bookingRepository.save(booking);
+    }
+
+    public void updateClient(ClientEntity client){
+        String url = "http://client-service/api/client/";
+        restTemplate.put(url, client);
     }
 
     public void deleteBookingById(Long id) throws Exception{

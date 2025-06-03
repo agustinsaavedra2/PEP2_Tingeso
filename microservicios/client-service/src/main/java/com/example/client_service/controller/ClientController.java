@@ -55,4 +55,15 @@ public class ClientController {
 
         return ResponseEntity.ok(clients);
     }
+
+    @PutMapping("/")
+    public ResponseEntity<ClientEntity> updateClient(@RequestBody ClientEntity client){
+        ClientEntity updatedClient = clientService.updateClient(client);
+
+        if(updatedClient == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updatedClient);
+    }
 }
