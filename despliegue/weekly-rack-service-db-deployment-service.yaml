@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: weekly-rack-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/weekly-rack-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: weekly-rack-db-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weekly-rack-db-deployment
+  labels:
+    app: weekly-rack-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: weekly-rack-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: weekly-rack-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: weekly-rack-db
+          image: mysql
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: weekly-rack-db-data
+      volumes:
+        - name: weekly-rack-db-data
+          persistentVolumeClaim:
+            claimName: weekly-rack-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weekly-rack-db-service
+  labels:
+    app: weekly-rack-db-service
+    tier: database
+spec:
+  ports:
+    - port: 3312
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: weekly-rack-db-deployment
+    tier: database
+  type: LoadBalancer

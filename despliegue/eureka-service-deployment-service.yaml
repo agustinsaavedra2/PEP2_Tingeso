@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: eureka-service-deployment
   replicas: 1
-  templates:
+  template:
     metadata:
       labels:
         app: eureka-service-deployment

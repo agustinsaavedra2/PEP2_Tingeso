@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: config-service-deployment
   replicas: 1
-  templates:
+  template:
     metadata:
       labels:
         app: config-service-deployment

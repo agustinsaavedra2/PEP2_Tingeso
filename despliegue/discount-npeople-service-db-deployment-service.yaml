@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: discount-npeople-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/discount-npeople-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: discount-npeople-db-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discount-npeople-db-deployment
+  labels:
+    app: discount-npeople-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: discount-npeople-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: discount-npeople-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: discount-npeople-db
+          image: mysql
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: discount-npeople-db-data
+      volumes:
+        - name: discount-npeople-db-data
+          persistentVolumeClaim:
+            claimName: discount-npeople-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discount-npeople-db-service
+  labels:
+    app: discount-npeople-db-service
+    tier: database
+spec:
+  ports:
+    - port: 3308
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: discount-npeople-db-deployment
+    tier: database
+  type: LoadBalancer

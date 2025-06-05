@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: booking-rate-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/booking-rate-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: booking-rate-db-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-rate-db-deployment
+  labels:
+    app: booking-rate-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: booking-rate-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: booking-rate-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: booking-rate-db
+          image: mysql
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: booking-rate-db-data
+      volumes:
+        - name: booking-rate-db-data
+          persistentVolumeClaim:
+            claimName: booking-rate-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-rate-db-service
+  labels:
+    app: booking-rate-db-service
+    tier: database
+spec:
+  ports:
+    - port: 3307
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: booking-rate-db-deployment
+    tier: database
+  type: LoadBalancer

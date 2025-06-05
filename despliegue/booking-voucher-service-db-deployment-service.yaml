@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: booking-voucher-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/booking-voucher-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: booking-voucher-db-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-voucher-db-deployment
+  labels:
+    app: booking-voucher-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: booking-voucher-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: booking-voucher-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: booking-voucher-db
+          image: mysql
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: booking-voucher-db-data
+      volumes:
+        - name: booking-voucher-db-data
+          persistentVolumeClaim:
+            claimName: booking-voucher-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-voucher-db-service
+  labels:
+    app: booking-voucher-db-service
+    tier: database
+spec:
+  ports:
+    - port: 3311
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: booking-voucher-db-deployment
+    tier: database
+  type: LoadBalancer

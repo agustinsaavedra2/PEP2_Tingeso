@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: gateway-service-deployment
   replicas: 1
-  templates:
+  template:
     metadata:
       labels:
         app: gateway-service-deployment
