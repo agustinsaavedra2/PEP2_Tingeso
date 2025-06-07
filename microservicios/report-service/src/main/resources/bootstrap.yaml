@@ -6,7 +6,7 @@ spring:
       enabled: true
       uri: http://config-service-service:8081
   datasource:
-    url: jdbc:mysql://localhost:3306/reportdb
+    url: jdbc:mysql://report-db-service:3313/reportdb
     username: root
     password: laucesbkn2001
   jpa:

@@ -17,7 +17,7 @@ spring:
           starttls:
             enable: true
   datasource:
-    url: jdbc:mysql://localhost:3306/bookingvoucherdb
+    url: jdbc:mysql://booking-voucher-db-service:3311/bookingvoucherdb
     username: root
     password: laucesbkn2001
   jpa:

@@ -6,7 +6,7 @@ spring:
       enabled: true
       uri: http://config-service-service:8081
   datasource:
-    url: jdbc:mysql://localhost:3306/discountfreqclients
+    url: jdbc:mysql://discount-freqclients-db-service:3309/discountfreqclients
     username: root
     password: laucesbkn2001
   jpa:
