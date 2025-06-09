@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name="bookings")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -31,5 +32,6 @@ public class BookingEntity {
     private Double discountBySpecialDays;
 
     @ElementCollection
+    @CollectionTable(name = "booking_clients", joinColumns = @JoinColumn(name = "booking_id"))
     private List<Long> clientIds;
 }

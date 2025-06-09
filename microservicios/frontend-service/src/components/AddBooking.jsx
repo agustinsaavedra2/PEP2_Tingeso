@@ -16,13 +16,13 @@ const AddBooking = () => {
 
     const navigate = useNavigate();
 
-    const createBooking = (e) => {
+    const create = (e) => {
         e.preventDefault();
         
-        const clientIds = clients.split(',').map(id => ({ id: parseInt(id.trim()) }));
+        const clientIds = clients.split(',').map(id => id.trim()) .filter(id => id !== '' && !isNaN(id)).map(id => parseInt(id));
 
         const booking = {nameBooking, lapsNumber, maximumTime, bookingDate, bookingTime,
-            basePrice, discountByPeopleNumber, discountByFrequentCustomer, discountBySpecialDays, clients: clientIds};
+            basePrice, discountByPeopleNumber, discountByFrequentCustomer, discountBySpecialDays, clientIds};
         
         BookingService.createBooking(booking).then(
             (response) => {
@@ -67,7 +67,7 @@ const AddBooking = () => {
                 <input type="text" className="form-control" id="formGroupExampleInput6" placeholder="Ex: 1, 2, 3,..." value={clients} onChange={(e) => setClients(e.target.value)}/>
             </div>
 
-            <button type="submit" style={{margin: "20px"}} className="btn btn-primary" onClick={(e) => createBooking(e)}>Add Booking</button>
+            <button type="submit" style={{margin: "20px"}} className="btn btn-primary" onClick={(e) => create(e)}>Add Booking</button>
         </form>
     );
 }
